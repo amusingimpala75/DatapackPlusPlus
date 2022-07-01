@@ -1,0 +1,31 @@
+{
+  "minecraft:item": {
+    "properties": {
+      "max_count": 16,
+      "group": "misc",
+      "recipe_remainder": "minecraft:apple",
+      "rarity": "epic",
+      "fireproof": true,
+      "food": {
+        "nutrition": 1,
+        "saturation": 1.0,
+        "meat": "true",
+        "can_always_eat": true,
+        "eat_quickly": true,
+        "effects": [
+          {
+            "chance": 1.0,
+            "effect": {
+              "type": "nausea",
+              "duration": 1000,
+              "amplifier": 2,
+              "ambient": false,
+              "show_particles": true,
+              "show_icon": true
+            }
+          }
+        ]
+      }
+    }
+  }
+}

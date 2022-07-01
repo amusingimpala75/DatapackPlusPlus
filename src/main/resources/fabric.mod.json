@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "datapackpp",
+  "version": "${version}",
+  "name": "Datapack++",
+  "description": "Expands the capabilities of datapacks",
+  "authors": [
+    "AmusingImpala75"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/datapackpp/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.amusingimpala75.datapackpp.client.DatapackppClient"
+    ],
+    "main": [
+      "com.amusingimpala75.datapackpp.Datapackpp"
+    ]
+  },
+  "mixins": [
+    "datapackpp.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.8",
+    "fabric": "*",
+    "minecraft": "1.19"
+  }
+}
