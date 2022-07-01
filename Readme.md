@@ -9,7 +9,7 @@ Datapack++ extends the functionality of the datapacking system built into Minecr
   - [x] Custom Codecs
   - [x] Reload addition
   - [x] Reload removal
-  - [ ] Proper reload replacement (Inventories, Item Entities, etc.)
+  - [x] Proper reload replacement (Inventories, Item Entities, etc.)
   - [ ] Component System
 - [ ] GUI for editing in game
   - [ ] Permissions Handling

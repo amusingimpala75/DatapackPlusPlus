@@ -34,12 +34,12 @@ public class ReloadListener<T> implements SimpleSynchronousResourceReloadListene
     private final Registry<T> registry;
     private final Logger logger;
     private final Identifier id;
-    private final TriConsumer<Iterable<ServerWorld>, List<T>, List<T>> afterReload;
+    private final TriConsumer<Iterable<ServerWorld>, List<Identifier>, List<Identifier>> afterReload;
 
     /**
      * @param afterReload worlds to process, modified items, removed items
      * */
-    public ReloadListener(Registry<T> registry, TriConsumer<Iterable<ServerWorld>, List<T>, List<T>> afterReload) {
+    public ReloadListener(Registry<T> registry, TriConsumer<Iterable<ServerWorld>, List<Identifier>, List<Identifier>> afterReload) {
         this.registry = registry;
         this.folder = registry.getKey().getValue().getPath();
         this.skipSubstring = this.folder.length() + 5;
@@ -57,7 +57,7 @@ public class ReloadListener<T> implements SimpleSynchronousResourceReloadListene
         int counterRetained = 0;
         int counterSkipped = 0;
         int counterModified = 0;
-        List<T> modifiedEntries = new ArrayList<>();
+        List<Identifier> modifiedEntries = new ArrayList<>();
         Map<Identifier, String> newRegisteredEntries = new HashMap<>();
         for (Map.Entry<Identifier, Resource> r : manager.findResources("dpp/" + this.folder, id -> id.getPath().endsWith(".json")).entrySet()) {
             Identifier fileId = r.getKey();
@@ -93,7 +93,7 @@ public class ReloadListener<T> implements SimpleSynchronousResourceReloadListene
                                 duck.registerToDatapackRegistry(id, entry);
                                 newRegisteredEntries.put(id, hash);
                                 if (this.entryHashes != null && this.entryHashes.containsKey(id)) {
-                                    modifiedEntries.add(entry);
+                                    modifiedEntries.add(id);
                                     this.entryHashes.remove(id);
                                     counterModified++;
                                 } else {
@@ -122,11 +122,9 @@ public class ReloadListener<T> implements SimpleSynchronousResourceReloadListene
 
         MinecraftServer server = ServerUtil.getCurrentServer();
         if (server != null) {
-            List<T> removedEntries = new ArrayList<>();
+            List<Identifier> removedEntries = new ArrayList<>();
             if (this.entryHashes != null) {
-                for (Identifier id : this.entryHashes.keySet()) {
-                    removedEntries.add(duck.getOldEntry(id));
-                }
+                removedEntries.addAll(this.entryHashes.keySet());
             }
             this.afterReload.accept(server.getWorlds(), modifiedEntries, removedEntries);
         } else {

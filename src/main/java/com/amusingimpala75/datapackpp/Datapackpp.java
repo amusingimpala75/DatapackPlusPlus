@@ -24,8 +24,8 @@ import net.minecraft.world.chunk.Chunk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Datapackpp implements ModInitializer {
 
@@ -41,14 +41,15 @@ public class Datapackpp implements ModInitializer {
             for (ServerWorld instance : worlds) {
                 for (Entity entity : instance.iterateEntities()) {
                     if (entity instanceof ItemEntity ie) {
-                        if (processStack(ie.getStack(), modified, removed)) {
+                        if (processStack(ie.getStack(), modified, removed, ie::setStack)) {
                             ie.kill();
                         }
                     } else if (entity instanceof PlayerEntity p) {
                         List<DefaultedList<ItemStack>> inventory = ((PlayerInventoryAccessor) p.getInventory()).dpp$accessor$combinedInventory();
                         for (DefaultedList<ItemStack> list : inventory) {
                             for (int i = 0; i < list.size(); i++) {
-                                if (processStack(list.get(i), modified, removed)) {
+                                final int index = i;
+                                if (processStack(list.get(i), modified, removed, stack -> list.set(index, stack))) {
                                     list.set(i, ItemStack.EMPTY);
                                 }
                             }
@@ -64,7 +65,8 @@ public class Datapackpp implements ModInitializer {
                     chunk.getBlockEntityPositions().stream().map(chunk::getBlockEntity).forEach(entity -> {
                         if (entity instanceof Inventory inv) {
                             for (int i = 0; i < inv.size(); i++) {
-                                if (processStack(inv.getStack(i), modified, removed)) {
+                                final int index = i;
+                                if (processStack(inv.getStack(i), modified, removed, stack -> inv.setStack(index, stack))) {
                                     inv.removeStack(i);
                                 }
                             }
@@ -78,28 +80,13 @@ public class Datapackpp implements ModInitializer {
     /**
      * @return returns true if the stack should be destroyed
      * */
-    private static boolean processStack(ItemStack stack, List<Item> modified, List<Item> removed) {
-        Item item = stack.getItem();
-        if (modified.contains(item)) {
-            try {
-                Item nw = Registry.ITEM.get(((DuckItem)item).dpp$getId());
-                stack$item.set(stack, nw);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        } else return removed.contains(item);
+    private static boolean processStack(ItemStack stack, List<Identifier> modified, List<Identifier> removed, Consumer<ItemStack> setStack) {
+        Identifier id = ((DuckItem)stack.getItem()).dpp$getId();
+        if (modified.contains(id)) {
+            Item nw = Registry.ITEM.get(id);
+            setStack.accept(new ItemStack(nw, stack.getCount()));
+        } else return removed.contains(id);
         return false;
-    }
-
-    private static final Field stack$item;
-
-    static {
-        try {
-            stack$item = ItemStack.class.getDeclaredField("item");
-            stack$item.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public static Identifier rl(String path) {
