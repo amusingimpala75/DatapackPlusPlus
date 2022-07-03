@@ -30,8 +30,8 @@ import java.util.function.Consumer;
 public class Datapackpp implements ModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("Datapack++");
-
     public static final String MOD_ID = "dpp";
+    public static final int LATEST_PACK_VERSION = 10;
 
 
     @Override

@@ -15,6 +15,7 @@
     "accessor.TACSAccessor"
   ],
   "client": [
+    "client.WorldEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

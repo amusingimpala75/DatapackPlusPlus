@@ -12,13 +12,27 @@ Datapack++ extends the functionality of the datapacking system built into Minecr
   - [x] Proper reload replacement (Inventories, Item Entities, etc.)
   - [ ] Component System
 - [ ] GUI for editing in game
+  - [x] Client side
+  - [ ] Generic file editing
+    - [x] Modification
+    - [x] Creation
+    - [x] Removal
+  - [ ] Folder customized menus
+  - [ ] Server side
   - [ ] Permissions Handling
 - [ ] Blocks
 - [ ] Fluids
 - [ ] Molang Support
 - [ ] Mob Effects
+- [ ] Screens
+- [ ] Keybindings
 
 Feel free to open an issue if you would like to see any new features, just add a "Feature Request" tag.
+
+### Questions:
+Q: What about Forge?  
+A: In theory this _should_ work, but I would have to re-write some of the mixins.
+I would rather focus on the main features first, and then later I might add Forge Support.
 
 ##### Items:
 

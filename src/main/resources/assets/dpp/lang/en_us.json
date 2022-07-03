@@ -1,0 +1,15 @@
+{
+  "screen.dpp.choose_pack": "Select a pack to edit:",
+  "screen.dpp.new_pack": "Create a new Datapack",
+  "screen.dpp.pack_id_prompt": "Pack ID [a-z0-9_.-]",
+  "screen.dpp.pack_desc_prompt": "Pack Description",
+  "screen.dpp.create_pack": "Create Datapack",
+  "screen.dpp.edit_pack": "Edit Datapack",
+  "screen.dpp.file_tree": "Edit Files",
+  "screen.dpp.invalid_pack_id": "Invalid Pack ID",
+  "screen.dpp.pack_already_exists": "Pack Already Exists",
+  "screen.dpp.create_foldr": "Create Folder",
+
+  "key.dpp.open_edit_pack_screen": "Open Datapack editing screen",
+  "key.category.dpp": "Datapack++ Keybindings"
+}
